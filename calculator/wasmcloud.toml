@@ -1,0 +1,8 @@
+name = "http-calculator"
+version = "0.1.0"
+language = "rust"
+type = "component"
+
+[component]
+wit_world = "calculator-component"
+wasm_target = "wasm32-wasi-preview2"

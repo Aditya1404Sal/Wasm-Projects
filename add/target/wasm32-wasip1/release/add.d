@@ -1,1 +1,0 @@
-/home/aditya-sal/Desktop/Wasm/Wasm-Projects/add/target/wasm32-wasip1/release/add.wasm: /home/aditya-sal/Desktop/Wasm/Wasm-Projects/add/src/bindings.rs /home/aditya-sal/Desktop/Wasm/Wasm-Projects/add/src/lib.rs
