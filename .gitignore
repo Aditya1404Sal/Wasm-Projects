@@ -4,3 +4,4 @@ makefile
 *.json
 *.cargo-lock
 /calculator-wash/target/
+/firewall/target/
