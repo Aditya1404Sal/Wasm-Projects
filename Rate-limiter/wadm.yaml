@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: rust-http-kv
   annotations:
-    version: v0.0.1
+    version: v0.0.5
     description: 'HTTP counter demo in Rust, using the WebAssembly Component Model and WebAssembly Interfaces Types (WIT)'
     wasmcloud.dev/authors: wasmCloud team
     wasmcloud.dev/source-url: https://github.com/wasmCloud/wasmCloud/blob/main/examples/rust/components/rate-limiter/wadm.yaml
@@ -17,8 +17,8 @@ spec:
       type: component
       properties:
         # To use the locally compiled code in this folder, use the line below instead after running `wash build`:
-        # image: file://./build/http_keyvalue_counter_s.wasm
-        image: ghcr.io/wasmcloud/components/rate-limiter-rust:0.1.0
+        image: file://./build/rate_limiter_s.wasm
+        # image: ghcr.io/wasmcloud/components/rate-limiter-rust:0.1.0
       traits:
         # Govern the spread/scheduling of the component
         - type: spreadscaler
@@ -31,20 +31,20 @@ spec:
         # (i.e. using a keyvalue cache)            
         - type: link
           properties:
-            target: kvredis
+            target: kvnats
             namespace: wasi
             package: keyvalue
             interfaces: [atomics, store]
             target_config:
-              - name: redis-url
+              - name: nats-url
                 properties:
-                  url: redis://127.0.0.1:6379
+                  url: nats://0.0.0.0:4225
 
     # Add a capability provider that enables Redis access
-    - name: kvredis
+    - name: kvnats
       type: capability
       properties:
-        image: ghcr.io/wasmcloud/keyvalue-redis:0.25.0
+        image: ghcr.io/wasmcloud/keyvalue-nats:0.2.0
 
     # Add a capability provider that enables HTTP access
     - name: httpserver
