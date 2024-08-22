@@ -9,7 +9,7 @@ struct HttpServer;
 
 impl Guest for HttpServer {
     fn handle(request: IncomingRequest, response_out: ResponseOutparam) {
-
+        let rate_limit = 30;
         let path_with_query = request
             .path_with_query()
             .expect("failed to get path with query");
@@ -47,13 +47,22 @@ impl Guest for HttpServer {
             .expect("failed to increment count");
 
         let response = OutgoingResponse::new(Fields::new());
-        response.set_status_code(200).unwrap();
         let response_body = response.body().unwrap();
+        if count > rate_limit {
+            response.set_status_code(500).unwrap();
+        response_body
+            .write()
+            .unwrap()
+            .blocking_write_and_flush(format!("Rate Limit exceeded\n").as_bytes())
+            .unwrap();
+        }else {
+            response.set_status_code(200).unwrap();
         response_body
             .write()
             .unwrap()
             .blocking_write_and_flush(format!("Counter {object_name}: {count}\n").as_bytes())
             .unwrap();
+        }
         OutgoingBody::finish(response_body, None).expect("failed to finish response body");
         ResponseOutparam::set(response_out, Ok(response));
     }
