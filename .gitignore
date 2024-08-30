@@ -5,3 +5,4 @@ makefile
 *.cargo-lock
 /calculator-wash/target/
 /Rate-limiter/target/
+geotiff/target/
