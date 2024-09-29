@@ -6,3 +6,4 @@ makefile
 /calculator-wash/target/
 /Rate-limiter/target/
 geotiff/target/
+kv-demo/target/

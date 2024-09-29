@@ -18,7 +18,7 @@ spec:
       properties:
         # To use the locally compiled code in this folder, use the line below instead after running `wash build`:
         image: file://./build/rate_limiter_s.wasm
-        # image: ghcr.io/wasmcloud/components/rate-limiter-rust:0.1.0
+        #image: docker.io/library/nginx:latest
       traits:
         # Govern the spread/scheduling of the component
         - type: spreadscaler
